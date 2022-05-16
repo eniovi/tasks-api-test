@@ -44,4 +44,12 @@ public class ApiTest {
 		RestAssured.given().when().get("/todo").then().statusCode(200);
 	}
 
+	@Test
+	public void shouldRemoveTaskWithSucess() {
+		Integer id = RestAssured.given().body("{ \"task\": \"Teste via API\", \"dueDate\": \"2022-12-30\" }")
+				.contentType(ContentType.JSON).when().post("/todo").then().statusCode(201).extract().path("id");
+
+		RestAssured.given().when().delete("/todo/" + id).then().statusCode(204);
+	}
+
 }
